@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Events</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+</head>
+<body class="container" style="margin-top: 50px;">
+
+    <div class="main">
+
+        <% if(error !== '') {%>
+            <div class="card" style="padding: 10px; margin-top: 20px; margin-bottom: 20px;">
+                <h5 style="color: red"><%= error %></h5>
+            </div>
+        <% } %>
+
+        <div class="card"> 
+            <div class="card-header">
+                Edit Event
+            </div>
+            <div class="card-body">
+                <form action = "/events/edit/<%= event[0].id %>" method="post">
+                    <div class="form-group">
+                        <label>Name:</label>
+                        <input type="text" class="form-control" name="name" autocomplete="off" value="<%= event[0].name %>">
+                    </div>
+                    <div class="form-group">
+                        <label>Description:</label>
+                        <input type="text" class="form-control" name="description" autocomplete="off" value="<%= event[0].description %>">
+                    </div>
+                    <div class="form-group">
+                        <label>Date:</label>
+                        <input type="datetime-local" class="form-control" name="date" autocomplete="off" value="<%= dateFormat(event[0].time, "yyyy-mm-dd'T'hh:MM")  %>">
+                    </div>
+                    <div>
+                        <label>Status:</label>
+                        <input list="browsers"  class="form-control" name="status" autocomplete="off" value="<%= event[0].status %>">
+                        <datalist id="browsers">
+                            <option value="ACTIVE">
+                            <option value="INACTIVE">
+                            <option value="CANCELLED">
+                            <option value="WEEKLY">
+                        </datalist> 
+                    </div>
+                    <br>
+                    <div class="form-group">
+                        <input type="submit" class="btn btn-info" value="Confirm changes"/>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <br>
+
+        <h3>Participants</h3>
+
+        <br>
+
+        <% if(participants.length) {%> 
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Accept Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                <% for(var i = 0; i< participants.length; i++) { %>
+                    <tr>
+                        <th scope="row"><%= (i+1) %></th>
+                        <td><%= participants[i].username%></td>
+                        <td><%= participants[i].accepted%></td>
+                    </tr>
+                <% } %>
+                </tbody>
+            </table>
+        <% } else { %>
+            <p>No participants yet</p>
+        <% } %>
+
+        <br>
+
+        <button onclick="location.href = '/events';" class="btn btn-info success" style="margin-bottom: 20px;">Back</button>
+
+    </div>
+
+</body>

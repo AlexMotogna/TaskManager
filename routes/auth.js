@@ -20,7 +20,8 @@ router.post('/login', function(req, res, next) {
         res.render('auth/login', { email: '', name: '',  password: '', error: 'Query error' })
       } else {
         if(rows.length) {
-            res.redirect('/users')
+            req.session.userid = rows[0].id
+            res.redirect('/events')
         } else {
             res.render('auth/login', { email: '', name: '',  password: '', error: 'Wrong credentials' })
         }
@@ -40,14 +41,20 @@ router.post('/register', function(req, res, next) {
                       `VALUES ("${req.body.name}", "${req.body.email}", "${req.body.password}")`,
                     function(error, rows) {
         if(error) {
-          
+          res.render('auth/register', { email: '', name: '',  password: '', error: 'Query error' })
         } else {
-          res.redirect('/users')
+          req.session.userid = rows[0].id
+          res.redirect('/events')
         }
       });
     } else {
       res.render('auth/register', { email: '', name: '',  password: '', error: 'Invallid email' })
     }
+});
+
+router.get('/logout', function(req, res, next) {
+  req.session.userid = undefined
+  res.redirect('/auth/login')
 });
 
 module.exports = router;

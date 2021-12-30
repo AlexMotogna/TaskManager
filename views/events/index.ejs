@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Events</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+</head>
+<body class="container" style="margin-top: 50px;">
+
+    <div class="sidebar">
+        <%- include('../partials/sidebar') %>
+    </div>
+
+    <div class="main">
+
+        <h3>Your events</h3>
+
+        <% if(createdEvents.length) {%> 
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Description</th>
+                        <th scope="col">Status</th>
+                        <th scope="col">Date</th>
+                        <th scope="col">View Details</th>
+                        <th scope="col">Invite</th>
+                    </tr>
+                </thead>
+                <tbody>
+                <% for(var i = 0; i< createdEvents.length; i++) { %>
+                    <tr>
+                        <th scope="row"><%= (i+1) %></th>
+                        <td><%= createdEvents[i].eventname%></td>
+                        <td><%= createdEvents[i].description%></td>
+                        <td><%= createdEvents[i].status%></td>
+                        <td><%= dateFormat(createdEvents[i].time, "dddd, d.mm.yyyy, HH:MM") %></td>
+                        <td><a class="btn btn-succes edit" href="../events/edit/<%=createdEvents[i].eventid%>">View Details</a></td>
+                        <td><a class="btn btn-succes edit" href="../events/invite/<%=createdEvents[i].eventid%>">Invite</a></td>
+                    </tr>
+                <% } %>
+                </tbody>
+            </table>
+        <% } else { %>
+            <p>No events yet</p>
+        <% } %>
+
+
+        <button onclick="location.href = '/events/create';" class="btn btn-info" style="margin-bottom: 20px;">Create New Event</button>
+
+        <h3>Events you've been invited to</h3>
+
+        <% if(invitedEvents.length) {%> 
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Description</th>
+                        <th scope="col">Status</th>
+                        <th scope="col">Date</th>
+                        <th scope="col">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                <% for(var i = 0; i< invitedEvents.length; i++) { %>
+                    <tr>
+                        <th scope="row"><%= (i+1) %></th>
+                        <td><%= invitedEvents[i].name%></td>
+                        <td><%= invitedEvents[i].description%></td>
+                        <td><%= invitedEvents[i].status%></td>
+                        <td><%= dateFormat(invitedEvents[i].time, "dddd, d.mm.yyyy, HH:MM") %></td>
+                        <% if(invitedEvents[i].accepted == "PENDING") {%>
+                            <td><button onclick="location.href = '/events/<%= invitedEvents[i].userid %>/confirm';" class="btn">Confirm participation</button></td>
+                        <% } else { %>
+                            <td>Accepted</td>
+                        <% } %>
+                    </tr>
+                <% } %>
+                </tbody>
+            </table>
+        <% } else { %>
+            <p>No events yet</p>
+        <% } %>
+    </div>
+
+</body>
