@@ -109,38 +109,54 @@ router.post('/edit/(:id)', utils.authHandler, function(req, res, next) {
 router.get('/invite/(:id)', utils.authHandler, function(req, res, next){
     var id = req.params.id
 
-    var queryParticipation = "SELECT userid, eventid, accepted, user.name AS username, " +
-                            "event.name AS eventname FROM task_manager.eventparticipation " +
-                            `join task_manager.event on eventid = event.id ` +
-                            `join task_manager.user on userid = user.id ` +
-                            `WHERE eventid = ${id}`
-    var queryUsers = "Select user.name, user.id from task_manager.user " +
+    var query = "Select user.name, user.id from task_manager.user " +
                     "WHERE user.id NOT IN ( " +
                     "SELECT user.id from task_manager.user " +
                     "join task_manager.eventparticipation on user.id = userid " +
                     "join task_manager.event on event.id = eventid " +
                     `WHERE eventid = ${id})`
-    var query = `${queryParticipation}; ${queryUsers}`;
     connection.query(query, function(error, result) {
         if (error) {
             console.log(error)
         } else {
             console.log(result)
+            res.render('events/invite', { users: result, eventid: id })
         }
     })
 });
 
 router.post('/invite/(:id)', utils.authHandler, function(req, res, next){
+    var id = req.params.id
 
+    var query = "INSERT INTO task_manager.eventparticipation (userid, eventid, accepted) " +
+                `VALUES (${req.body.userid}, ${id}, "PENDING")`
+    console.log(query)
+    connection.query(query, function(error, result) {
+        if (error) {
+            console.log(error)
+        } 
+        res.redirect('/events/')
+    })
+});
+
+router.get('/delete/(:id)', utils.authHandler, function(req, res, next){
+    var id = req.params.id
+    var query = `Delete from task_manager.event WHERE id = ${id}`
+    connection.query(query, function(error, result) {
+        if (error) {
+            console.log(error)
+        }
+        res.redirect('/events/')
+    })
 });
 
 router.get('/(:id)/confirm', utils.authHandler, function(req, res, next) {
     var eventId = req.params.id
     console.log(eventId)
 
-    connection.query('UPDATE task_manager.eventparticipation SET accepted = "ACCEPTED" ' +
-                        ` WHERE userid = ${req.session.userid} and eventid = ${eventId}`,
-                    function(error, result) {
+    var query = 'UPDATE task_manager.eventparticipation SET accepted = "ACCEPTED" ' +
+                `WHERE userid = ${req.session.userid} and eventid = ${eventId}`
+    connection.query(query, function(error, result) {
         if (error) {
             console.log(error)
         } else {
@@ -148,5 +164,21 @@ router.get('/(:id)/confirm', utils.authHandler, function(req, res, next) {
         }
     })	
 });
+
+router.get('/(:id)/deny', utils.authHandler, function(req, res, next) {
+    var eventId = req.params.id
+    console.log(eventId)
+
+    var query = 'UPDATE task_manager.eventparticipation SET accepted = "DENIED" ' +
+                `WHERE userid = ${req.session.userid} and eventid = ${eventId}`
+    connection.query(query, function(error, result) {
+        if (error) {
+            console.log(error)
+        } else {
+            res.redirect('/events/')
+        }
+    })	
+});
+
 
 module.exports = router;

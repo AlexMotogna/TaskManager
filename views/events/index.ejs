@@ -72,11 +72,21 @@
                         <td><%= invitedEvents[i].description%></td>
                         <td><%= invitedEvents[i].status%></td>
                         <td><%= dateFormat(invitedEvents[i].time, "dddd, d.mm.yyyy, HH:MM") %></td>
-                        <% if(invitedEvents[i].accepted == "PENDING") {%>
-                            <td><button onclick="location.href = '/events/<%= invitedEvents[i].userid %>/confirm';" class="btn">Confirm participation</button></td>
-                        <% } else { %>
+
+                        <% switch(invitedEvents[i].accepted) {
+                        case "PENDING": %> 
+                            <td><button onclick="location.href = '/events/<%= invitedEvents[i].eventid %>/confirm';" class="btn">Confirm participation</button></td>
+                            <td><button onclick="location.href = '/events/<%= invitedEvents[i].eventid %>/deny';" class="btn">Deny participation</button></td>
+                            <% break;
+                        case "ACCEPTED": %> 
                             <td>Accepted</td>
-                        <% } %>
+                            <td><button onclick="location.href = '/events/<%= invitedEvents[i].eventid %>/deny';" class="btn">Deny participation</button></td>
+                            <% break;
+                        case "DENIED": %>
+                            <td>Denied</td>
+                            <td><button onclick="location.href = '/events/<%= invitedEvents[i].eventid %>/confirm';" class="btn">Confirm participation</button></td>
+                            <% break;
+                        } %> 
                     </tr>
                 <% } %>
                 </tbody>

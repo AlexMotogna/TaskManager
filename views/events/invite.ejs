@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Events</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+</head>
+<body class="container" style="margin-top: 50px;">
+
+    <div class="main">
+        <div class="card"> 
+            <div class="card-header">
+                Invite users to your event
+            </div>
+            <div class="card-body">
+                <form action = "/events/invite/<%= eventid %>" method="post" id="invitation">
+                    <div>
+                        <label>User:</label>
+                        <select id="users" name="userid" form="invitation">     
+                            <% for(var i = 0; i< users.length; i++) {%> 
+                                <option value="<%= users[i].id %>"><%= users[i].name %></option>
+                            <% } %> 
+                        </select> 
+                    </div>
+                    <br>
+                    <div class="form-group">
+                        <input type="submit" class="btn btn-info" value="Invite"/>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <br>
+
+        <button onclick="location.href = '/events';" class="btn btn-info success" style="margin-bottom: 20px;">Back</button>
+    </div>
+
+</body>
