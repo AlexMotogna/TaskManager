@@ -46,3 +46,15 @@ a {
   margin-left: 240px; /* Same as the width of the sidebar */
   padding: 0px 10px;
 }
+
+.bottom-text {
+  position: absolute;
+  bottom: 0;
+  font-size: 22px !important;
+  margin-bottom: 20px !important;
+}
+
+.bottom-text::after {
+  content: url('/images/logout.png');
+  margin-left: 20px;
+}

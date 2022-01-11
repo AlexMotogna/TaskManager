@@ -5,12 +5,10 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
 var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
 var authRouter = require('./routes/auth');
 var eventsRouter = require('./routes/events');
-
-var mysql = require('mysql');
-var connectoin = require('./lib/db');
+var taskRouter = require('./routes/task');
+var progressRouter = require('./routes/progress');
 
 var session = require('express-session');
 
@@ -35,9 +33,10 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
-app.use('/users', usersRouter);
 app.use('/auth', authRouter);
 app.use('/events', eventsRouter);
+app.use('/task', taskRouter)
+app.use('/task/progress', progressRouter)
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

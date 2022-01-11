@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Events</title>
+    <title>Tasks</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
 </head>
 <body class="container" style="margin-top: 20px;">
@@ -18,30 +18,17 @@
 
         <div class="card"> 
             <div class="card-header">
-                Create Event
+                Create Progress
             </div>
             <div class="card-body">
-                <form action = "/events/create" method="post" id="createform">
-                    <div class="form-group">
-                        <label>Name:</label>
-                        <input type="text" class="form-control" name="name" autocomplete="off">
-                    </div>
+                <form action = "/task/progress/<%=goalid%>/create" method="post" id="createform">
                     <div class="form-group">
                         <label>Description:</label>
                         <input type="text" class="form-control" name="description" autocomplete="off">
                     </div>
                     <div class="form-group">
-                        <label>Date:</label>
-                        <input type="datetime-local" class="form-control" name="date" autocomplete="off">
-                    </div>
-                    <div>
-                        <label>Status:</label>
-                        <select id="status" name="status" form="createform">
-                            <option value="ACTIVE">ACTIVE</option>
-                            <option value="INACTIVE">INACTIVE</option>
-                            <option value="CANCELLED">CANCELLED</option>
-                            <option value="WEEKLY">WEEKLY</option>
-                        </select>
+                        <label>Hours Spent:</label>
+                        <input type="number" class="form-control" name="hoursspent" autocomplete="off">
                     </div>
                     <br>
                     <div class="form-group">
@@ -53,7 +40,7 @@
 
         <br>
 
-        <button onclick="location.href = '/events';" class="btn btn-danger delete" style="margin-bottom: 20px;">Cancel</button>
+        <button onclick="location.href = '/task/progress/<%=goalid%>';" class="btn btn-danger delete" style="margin-bottom: 20px;">Cancel</button>
 
     </div>
 

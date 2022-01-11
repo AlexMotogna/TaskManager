@@ -12,7 +12,6 @@ router.get('/login', function(req, res, next) {
 });
 
 router.post('/login', function(req, res, next) {
-    console.log(req.body)
     connection.query(`SELECT * FROM user WHERE email = "${req.body.email}"` +
                         `AND password = "${req.body.password}"`,
                     function(error, rows) {
@@ -34,8 +33,6 @@ router.get('/register', function(req, res, next) {
 });
 
 router.post('/register', function(req, res, next) {
-    console.log(req.body.name)
-
     if(utils.validateEmail(req.body.email)) {
       connection.query("INSERT INTO task_manager.user (name, email, password) " +
                       `VALUES ("${req.body.name}", "${req.body.email}", "${req.body.password}")`,
@@ -43,8 +40,7 @@ router.post('/register', function(req, res, next) {
         if(error) {
           res.render('auth/register', { email: '', name: '',  password: '', error: 'Query error' })
         } else {
-          req.session.userid = rows[0].id
-          res.redirect('/events')
+          res.redirect('/auth/login')
         }
       });
     } else {

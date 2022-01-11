@@ -6,7 +6,7 @@
     <title>Events</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
 </head>
-<body class="container" style="margin-top: 50px;">
+<body class="container" style="margin-top: 20px;">
 
     <div class="main">
 
@@ -37,11 +37,34 @@
                     <div>
                         <label>Status:</label>
                         <select id="status" name="status" form="editform" value="<%= event[0].status %>">
-                            <option value="ACTIVE">ACTIVE</option>
-                            <option value="INACTIVE">INACTIVE</option>
-                            <option value="CANCELLED">CANCELLED</option>
-                            <option value="WEEKLY">WEEKLY</option>
-                            <!-- TODO PRESELECTED -->
+
+                            <% switch(event[0].status) {
+                                case "ACTIVE": %>
+                                    <option value="ACTIVE" selected="selected">ACTIVE</option>
+                                    <option value="INACTIVE">INACTIVE</option>
+                                    <option value="CANCELLED">CANCELLED</option>
+                                    <option value="WEEKLY">WEEKLY</option>
+                                <% break;
+                            case "INACTIVE": %> 
+                                    <option value="ACTIVE">ACTIVE</option>
+                                    <option value="INACTIVE" selected="selected">INACTIVE</option>
+                                    <option value="CANCELLED">CANCELLED</option>
+                                    <option value="WEEKLY">WEEKLY</option>
+                                <% break;
+                            case "CANCELLED": %>
+                                    <option value="ACTIVE">ACTIVE</option>
+                                    <option value="INACTIVE">INACTIVE</option>
+                                    <option value="CANCELLED" selected="selected">CANCELLED</option>
+                                    <option value="WEEKLY">WEEKLY</option>
+                                <% break;
+                            case "WEEKLY": %> 
+                                    <option value="ACTIVE">ACTIVE</option>
+                                    <option value="INACTIVE">INACTIVE</option>
+                                    <option value="CANCELLED">CANCELLED</option>
+                                    <option value="WEEKLY" selected="selected">WEEKLY</option>
+                                <% break;
+                            } %> 
+ 
                         </select>
                     </div>
                     <br>
@@ -86,9 +109,10 @@
         <div class="card" style="margin-top: 20px;"> 
             <div class="card-body">
                 <h6>Want to delete the event?</h6>
-                <button onclick="location.href='/events/delete/<%= event[0].id %>'" class="btn btn-danger delete" >Delete Event</button>
+                <button onclick="location.href='/events/delete/<%=event[0].id%>'" class="btn btn-danger delete">Delete Event</button>
             </div>
         </div>
+
         <br>
 
         <button onclick="location.href = '/events';" class="btn btn-info success" style="margin-bottom: 20px;">Back</button>

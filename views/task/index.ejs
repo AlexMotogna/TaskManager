@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Tasks</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+</head>
+<body class="container" style="margin-top: 20px;">
+
+    <div class="sidebar">
+        <%- include('../partials/sidebar') %>
+    </div>
+
+    <div class="main">
+        <h1>Your Tasks</h1>
+
+        <% if(tasks.length) {%> 
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Description</th>
+                        <th scope="col">Completed Status</th>
+                        <th scope="col">Details</th>
+                        <th scope="col">Progress</th>
+                    </tr>
+                </thead>
+                <tbody>
+                <% for(var i = 0; i< tasks.length; i++) { %>
+                    <tr>
+                        <th scope="row"><%= (i+1) %></th>
+                        <td><%= tasks[i].name%></td>
+                        <td><%= tasks[i].description%></td>
+                        <td>
+                            <% if(tasks[i].completedStatus) { %>
+                                <p style="color:green;">Completed</p>
+                            <% } else { %>
+                                <p style="color:red;">Incomplete</p>
+                            <% } %>
+                        </td>
+                        <td><a class="btn btn-succes edit" href="../task/edit/<%=tasks[i].id%>">View Details</a></td>
+                        <td><a class="btn btn-succes edit" href="../task/progress/<%=tasks[i].id%>">View Progress</a></td>
+                    </tr>
+                <% } %>
+                </tbody>
+            </table>
+        <% } else { %>
+            <p>No tasks yet</p>
+        <% } %>
+
+        <button onclick="location.href = '/task/create';" class="btn btn-info" style="margin-bottom: 20px;">Create New Task</button>
+
+    </div>
+    
+</body>

@@ -16,7 +16,6 @@ router.get('/', utils.authHandler, function(req, res, next) {
         `WHERE user.id = "${req.session.userid}"`
 
     var query = `${createdEventsQuery}; ${invitedEventsQuery}`;
-
     connection.query(query, function(error, result) {
         if (error) {
             console.log(error)

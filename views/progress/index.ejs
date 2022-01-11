@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Tasks</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+</head>
+<body class="container" style="margin-top: 20px;">
+
+    <div class="main">
+        <h1>Progress for task</h1>
+
+        <% if(progress.length) {%> 
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Description</th>
+                        <th scope="col">Time</th>
+                        <th scope="col">Hours Spent</th>
+                    </tr>
+                </thead>
+                <tbody>
+                <% for(var i = 0; i< progress.length; i++) { %>
+                    <tr>
+                        <th scope="row"><%= (i+1) %></th>
+                        <td><%= progress[i].description%></td>
+                        <td><%= dateFormat(progress[i].time, "dddd, d.mm.yyyy, HH:MM") %></td>
+                        <td><%= progress[i].hoursspent%></td>
+                    </tr>
+                <% } %>
+                </tbody>
+            </table>
+        <% } else { %>
+            <p>No progress yet</p>
+        <% } %>
+
+        <button onclick="location.href = '<%=goalid%>/create';" class="btn btn-info" style="margin-bottom: 20px;">Add Progress</button>
+
+        <br>
+
+        <button onclick="location.href = '/task';" class="btn btn-info" style="margin-bottom: 20px;">Back</button>
+
+    </div>
+
+</body>

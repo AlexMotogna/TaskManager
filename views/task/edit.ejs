@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Tasks</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+</head>
+<body class="container" style="margin-top: 20px;">
+
+    <div class="main">
+
+        <% if(error !== '') {%>
+            <div class="card" style="padding: 10px; margin-top: 20px; margin-bottom: 20px;">
+                <h5 style="color: red"><%= error %></h5>
+            </div>
+        <% } %>
+
+        <div class="card">
+            <div class="card-header">
+                Edit Task
+            </div>
+            <div class="card-body">
+                <form action = "/task/edit/<%=task[0].id%>" method="post" id="createform">
+                    <div class="form-group">
+                        <label>Name:</label>
+                        <input type="text" class="form-control" name="name" autocomplete="off" value="<%=task[0].name%>">
+                    </div>
+                    <div class="form-group">
+                        <label>Description:</label>
+                        <input type="text" class="form-control" name="description" autocomplete="off" value="<%=task[0].description%>">
+                    </div>
+                    <br>
+                    <div class="form-group">
+                        <input type="submit" class="btn btn-info" value="Edit"/>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <br>
+
+        <div class="card" style="margin-top: 20px;"> 
+            <div class="card-body">
+                <h6>Want to delete the task?</h6>
+                <button onclick="location.href='/task/delete/<%=task[0].id %>'" class="btn btn-danger delete">Delete Task</button>
+            </div>
+        </div>
+        
+        <br>
+
+        <% if(!task[0].completedStatus) { %>
+            <div class="card" style="margin-top: 20px;"> 
+                <div class="card-body">
+                    <h6>Is task complete?</h6>
+                    <button onclick="location.href='/task/complete/<%=task[0].id %>'" class="btn btn-info">Complete Task</button>
+                </div>
+            </div>
+
+            <br>
+        <% } %>
+
+        <button onclick="location.href = '/task';" class="btn btn-info" style="margin-bottom: 20px;">Back</button>
+
+    </div>
+
+</body>
